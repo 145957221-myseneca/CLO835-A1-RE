@@ -6,7 +6,7 @@
 ```docker pull URI-app ```
 
 ### Running mysql
-```docker run --name new_db --net Dnet1 -d -e MYSQL_ROOT_PASSWORD=password123 uri```
+```docker run --name my_db --net Dnet1 -d -e MYSQL_ROOT_PASSWORD=password123 uri```
 
 ### Check all running Containers
 ```docker container ls -a ```
