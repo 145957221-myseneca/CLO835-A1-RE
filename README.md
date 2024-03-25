@@ -1,41 +1,35 @@
-# Install the required MySQL package
+# Building and running 2 tier web application in ec2 using ECR images
+### Building mysql docker image using ecr URI 
+```docker pull URI-sql ```
 
-sudo apt-get update -y
-sudo apt-get install mysql-client -y
-
-# Running application locally
-pip3 install -r requirements.txt
-sudo python3 app.py
-# Building and running 2 tier web application locally
-### Building mysql docker image 
-```docker build -t my_db -f Dockerfile_mysql . ```
-
-### Building application docker image 
-```docker build -t my_app -f Dockerfile . ```
+### Building app docker image using ecr URI
+```docker pull URI-app ```
 
 ### Running mysql
-```docker run -d -e MYSQL_ROOT_PASSWORD=pw  my_db```
+```docker run --name new_db --net Dnet1 -d -e MYSQL_ROOT_PASSWORD=password123 uri```
 
+### Check all running Containers
+```docker container ls -a ```
 
 ### Get the IP of the database and export it as DBHOST variable
 ```docker inspect <container_id>```
 
 
-### Example when running DB runs as a docker container and app is running locally
+### Export env to run the applications (sql container ip)
 ```
-export DBHOST=127.0.0.1
-export DBPORT=3307
-```
-### Example when running DB runs as a docker container and app is running locally
-```
-export DBHOST=172.17.0.2
+export DBHOST=172.18.0.2
 export DBPORT=3306
 ```
 ```
 export DBUSER=root
 export DATABASE=employees
 export DBPWD=pw
-export APP_COLOR=blue
 ```
 ### Run the application, make sure it is visible in the browser
-```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
+```
+docker run -d -p 8081:8080 \
+-e DBHOST=$DBHOST -e DBPORT=$DBPORT \
+-e DBUSER=$DBUSER -e DBPWD=$DBPWD \
+-e APP_COLOR=blue --name blue \
+uri
+```
