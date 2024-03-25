@@ -26,11 +26,11 @@ jobs:
         AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         AWS_REGION: us-east-1
 
-    - name: Build, test, tag, and push image to Amazon ECR
+    - name: Build, test, tag, and push image to Amazon ECR to sql
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: clo835-week3
-        IMAGE_TAG: v0.1
+        ECR_REPOSITORY: sql-ecr
+        IMAGE_TAG: v1
       run: |
         cd Chapter02/kubia/
         ls -ltra
