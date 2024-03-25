@@ -1,4 +1,4 @@
-name: Deploy to ECR
+name: Deploy to sql and app ecr
 
 on: 
   push:
